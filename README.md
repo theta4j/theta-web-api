@@ -1,1 +1,119 @@
 # THETA Web API Client
+
+[![Javadocs](https://javadoc.io/badge/org.theta4j/theta-web-api.svg)](https://javadoc.io/doc/org.theta4j/theta-web-api)
+
+Client implementation of [RICOH THETA API v2.1](https://developers.theta360.com/en/docs/v2.1/api_reference/).
+
+Supported environments are Java, JVM languages, Android, and THETA Plug-in.
+
+Tested on RICOH THETA V. Some features for THETA S and SC are not tested.
+
+`camera.getLivePreview`, `camera._getMySetting`, `camera._setMySetting` is currently not implemented.
+
+## Getting Started
+
+```groovy
+repository {
+    ...
+    jcenter() // insert this line
+}
+
+dependencies {
+    ...
+    implementation 'org.theta4j:theta-web-api:1.0.0' // insert this line
+}
+```
+
+## Example
+
+### Create Theta instance
+
+`org.theta4j.webapi.Theta` is central object of this API.
+
+When use from external device and THETA is Wi-Fi access point mode.
+
+```java
+final Theta theta = Theta.create(); // endpoint is set to http://192.168.1.1
+```
+
+When use from external device and THETA is Wi-Fi client mode.
+Digest Authentication is required in this mode.
+
+```java
+final String endpoint = "http://192.168.100.42"; // just an example
+final String username = "THETAYL00000000";       // just an example
+final String password = "p@55w0rd";              // just an example
+final Theta theta = Theta.create(endpoint, username, password); // specify username and password
+```
+
+When use from THETA Plug-in.
+
+```java
+final Theta theta = Theta.createForPlugin(); // endpoint is set to http://127.0.0.1:8080
+```
+
+### Take a picture
+
+```java
+theta.takePicture();
+```
+
+### Take a picture and wait for done
+
+```java
+import org.theta4j.osc.CommandResponse;
+import org.theta4j.osc.CommandState;
+import org.theta4j.webapi.TakePicture;
+...
+CommandResponse<TakePicture.Result> response = theta.takePicture();
+while(response.getState() != CommandState.DONE) {
+    response = theta.commandStatus(response);
+    Thread.sleep(100);
+}
+System.out.println("fileUrl: " + response.getResults().getFileUrl());
+```
+
+### Get option value
+
+```java
+import static org.theta4j.webapi.Options.*;
+...
+final ISOSpeed iso = theta.getOption(ISO);
+System.out.println("ISO: " + iso);
+```
+
+### Get multiple option values on one HTTP request
+
+```java
+import org.theta4j.osc.OptionSet;
+import static org.theta4j.webapi.Options.*;
+...
+final OptionSet optionSet = theta.getOptions(ISO, ISO_SUPPORT, SHUTTER_SPEED);
+System.out.println("ISO: " + optionSet.get(ISO));
+System.out.println("ISO Support: " + optionSet.get(ISO_SUPPORT));
+System.out.println("Shutter Speed: " + optionSet.get(SHUTTER_SPEED));
+```
+
+### Set option value
+
+```java
+import static org.theta4j.webapi.Options.*;
+import org.theta4j.webapi.ISOSpeed;
+...
+theta.setOption(ISO, ISOSpeed._200);
+```
+
+### Set multiple option values on one HTTP request
+
+```java
+import org.theta4j.osc.OptionSet;
+import static org.theta4j.webapi.Options.*;
+import org.theta4j.webapi.ExposureProgram;
+import org.theta4j.webapi.ISOSpeed;
+...
+final OptionSet optionSet = new OptionSet.Builder()
+        .set(EXPOSURE_PROGRAM, ExposureProgram.ISO_SPEED)
+        .set(ISO, ISOSpeed._200)
+        .build();          
+theta.setOptions(optionSet);
+```
