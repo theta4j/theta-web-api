@@ -23,6 +23,9 @@ plugins {
 version = "1.0.0"
 
 tasks {
+    javadoc {
+        options.locale = "en_US"
+    }
     create<Jar>("sourceJar") {
         from(sourceSets["main"].java.srcDirs)
         classifier = "sources"
