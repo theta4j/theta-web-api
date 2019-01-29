@@ -59,27 +59,4 @@ public interface Option<T> {
 
         return new OptionImpl<>(name, type);
     }
-
-    class OptionImpl<T> implements Option<T> {
-        private final String name;
-
-        private final Class<T> type;
-
-        OptionImpl(String name, Class<T> type) {
-            this.name = name;
-            this.type = type;
-        }
-
-        @Nonnull
-        @Override
-        public String getName() {
-            return name;
-        }
-
-        @Nonnull
-        @Override
-        public Class<T> getType() {
-            return type;
-        }
-    }
 }

@@ -63,36 +63,4 @@ public interface Command<P, R> {
 
         return new CommandImpl<>(name, parameterType, resultType);
     }
-
-    class CommandImpl<P, R> implements Command<P, R> {
-        private final String name;
-
-        private final Class<P> parameterType;
-
-        private final Class<R> resultType;
-
-        CommandImpl(final String name, final Class<P> parameterType, final Class<R> resultType) {
-            this.name = name;
-            this.parameterType = parameterType;
-            this.resultType = resultType;
-        }
-
-        @Nonnull
-        @Override
-        public String getName() {
-            return name;
-        }
-
-        @Nonnull
-        @Override
-        public Class<P> getParameterType() {
-            return parameterType;
-        }
-
-        @Nonnull
-        @Override
-        public Class<R> getResultType() {
-            return resultType;
-        }
-    }
 }

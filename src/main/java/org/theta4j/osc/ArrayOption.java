@@ -41,27 +41,4 @@ public interface ArrayOption<T> extends Option<T> {
 
         return new ArrayOptionImpl<>(name, type);
     }
-
-    class ArrayOptionImpl<T> implements ArrayOption<T> {
-        private final String name;
-
-        private final Class<T> type;
-
-        ArrayOptionImpl(String name, Class<T> type) {
-            this.name = name;
-            this.type = type;
-        }
-
-        @Nonnull
-        @Override
-        public String getName() {
-            return name;
-        }
-
-        @Nonnull
-        @Override
-        public Class<T> getType() {
-            return type;
-        }
-    }
 }
