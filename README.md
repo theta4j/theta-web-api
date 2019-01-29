@@ -12,6 +12,8 @@ Tested on RICOH THETA V. Some features for THETA S and SC are not tested.
 
 ## Getting Started
 
+Modify your `build.gradle` to include this library.
+
 ```groovy
 repository {
     ...
@@ -28,7 +30,7 @@ dependencies {
 
 ### Create Theta instance
 
-`org.theta4j.webapi.Theta` is central object of this API.
+`org.theta4j.webapi.Theta` is central object of this library.
 
 When use from external device and THETA is Wi-Fi access point mode.
 
