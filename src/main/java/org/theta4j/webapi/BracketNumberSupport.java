@@ -53,8 +53,6 @@ public final class BracketNumberSupport {
 
     /**
      * Step size.
-     *
-     * @return
      */
     public int getStepSize() {
         return stepSize;
