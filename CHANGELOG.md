@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.1.0
+
+* Support `camera._getMySetting` command.
+* Support `camera._setMySetting` command.
+
 ## 1.0.1
 
 * Javadoc for US English.
