@@ -18,15 +18,14 @@ package org.theta4j.webapi;
 
 import javax.annotation.Nonnull;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 final class Delete {
     static final class Parameter {
         private final List<URL> fileUrls;
-
-        Parameter(@Nonnull final URL... fileUrls) {
-            this(Arrays.asList(fileUrls));
-        }
 
         Parameter(@Nonnull final Collection<URL> fileUrls) {
             this.fileUrls = Collections.unmodifiableList(new ArrayList<>(fileUrls));
