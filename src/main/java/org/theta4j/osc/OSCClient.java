@@ -351,8 +351,7 @@ public final class OSCClient {
 
     // Helpers
 
-    @Nonnull
-    private JsonObject httpGet(@Nonnull final String url) throws IOException {
+    private JsonObject httpGet(final String url) throws IOException {
         final Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -371,8 +370,7 @@ public final class OSCClient {
         }
     }
 
-    @Nonnull
-    private JsonObject httpPost(@Nonnull final String url, @Nullable final JsonObject body) throws IOException {
+    private JsonObject httpPost(final String url, final JsonObject body) throws IOException {
         final RequestBody requestBody = RequestBody.create(
                 MediaType.parse("application/json; charset=UTF-8"),
                 body != null ? GSON.toJson(body) : "");
