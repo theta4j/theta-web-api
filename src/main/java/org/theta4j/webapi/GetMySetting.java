@@ -30,4 +30,8 @@ final class GetMySetting {
             this.optionNames = Collections.unmodifiableCollection(optionNames);
         }
     }
+
+    private GetMySetting() {
+        throw new AssertionError();
+    }
 }

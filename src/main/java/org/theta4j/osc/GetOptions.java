@@ -27,4 +27,8 @@ final class GetOptions {
             this.optionNames = Collections.unmodifiableCollection(optionNames);
         }
     }
+
+    private GetOptions() {
+        throw new AssertionError();
+    }
 }

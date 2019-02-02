@@ -31,4 +31,8 @@ final class SetMySetting {
             this.optionSet = optionSet;
         }
     }
+
+    private SetMySetting() {
+        throw new AssertionError();
+    }
 }
