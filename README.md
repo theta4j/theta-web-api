@@ -8,7 +8,7 @@ Supported environments are Java, JVM languages, Android, and THETA Plug-in.
 
 Tested on RICOH THETA V. Some features for THETA S and SC are not tested.
 
-`camera.getLivePreview`, `camera._getMySetting`, `camera._setMySetting` is currently not implemented.
+`camera.getLivePreview` is currently not implemented.
 
 ## Getting Started
 
