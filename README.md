@@ -26,7 +26,34 @@ dependencies {
 }
 ```
 
+## Usage for Android and THETA Plug-in
+
+This library takes network access, so your application needs `android.permission.INTERNET` permission.
+
+Insert the following line into your `AndroidManifest.xml`.
+
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+```
+
+Network access on UI thread causes an error on Android system. You need to call API on other thread.
+
+For more details, see [the official document](https://developer.android.com/guide/components/processes-and-threads).
+
+```kotlin
+// Bad example in Kotlin
+class MyActivity : Activity() {
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        // UI event is invoked on UI thread!!
+        theta.takePicture() // this line causes error!!
+        ...
+    }
+}
+```
+
 ## Example
+
+These examples are written in Java.
 
 ### Create Theta instance
 
