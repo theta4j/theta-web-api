@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * RICOH THETA Web API v2.1 client.
@@ -396,6 +397,102 @@ public final class Theta {
     @Nonnull
     public CommandResponse<Void> reset() throws IOException {
         return oscClient.commandExecute(Commands.RESET);
+    }
+
+    /**
+     * Acquires the default shooting property for boot time.
+     *
+     * @param captureMode Capture mode.
+     * @param option      Option to acquire value.
+     * @param <T>         Type of option.
+     * @return Acquired property.
+     * @throws IOException          I/O error is occurred.
+     * @throws OSCException         Server returned error response.
+     * @throws NullPointerException if argument is null or contains null.
+     */
+    @Nonnull
+    public <T> T getMySetting(@Nonnull final CaptureMode captureMode, @Nonnull final Option<T> option) throws IOException {
+        return getMySettings(captureMode, option).get(option);
+    }
+
+    /**
+     * Acquires the default shooting properties for boot time.
+     *
+     * @param captureMode Capture mode.
+     * @param options     Options to acquire values.
+     * @return Acquired properties.
+     * @throws IOException          I/O error is occurred.
+     * @throws OSCException         Server returned error response.
+     * @throws NullPointerException if argument is null or contains null.
+     * @see <a href="https://developers.theta360.com/en/docs/v2.1/api_reference/commands/camera._get_my_setting.html">camera._getMySetting · commands · API Reference · v2.1 · API &amp; SDK | RICOH THETA Developers</a>
+     */
+    @Nonnull
+    public OptionSet getMySettings(@Nonnull final CaptureMode captureMode, @Nonnull final Option... options) throws IOException {
+        return getMySettings(captureMode, Arrays.asList(options));
+    }
+
+    /**
+     * Acquires the default shooting properties for boot time.
+     *
+     * @param captureMode Capture mode.
+     * @param options     Options to acquire values.
+     * @return Acquired properties.
+     * @throws IOException          I/O error is occurred.
+     * @throws OSCException         Server returned error response.
+     * @throws NullPointerException if argument is null or contains null.
+     * @see <a href="https://developers.theta360.com/en/docs/v2.1/api_reference/commands/camera._get_my_setting.html">camera._getMySetting · commands · API Reference · v2.1 · API &amp; SDK | RICOH THETA Developers</a>
+     */
+    @Nonnull
+    public OptionSet getMySettings(@Nonnull final CaptureMode captureMode, @Nonnull final Collection<Option> options) throws IOException {
+        Objects.requireNonNull(captureMode, "captureMode can not be null.");
+        Objects.requireNonNull(options, "options can not be null.");
+        if (options.contains(null)) {
+            throw new NullPointerException("options can not contain null.");
+        }
+
+        final List<String> optionNames = options.stream().map(Option::getName).collect(Collectors.toList());
+        final GetMySetting.Parameter parameter = new GetMySetting.Parameter(captureMode, optionNames);
+        return oscClient.commandExecute(Commands.GET_MY_SETTINGS, parameter).getResult();
+    }
+
+    /**
+     * Set the default shooting properties for boot time.
+     *
+     * @param captureMode Capture mode.
+     * @param option      Option to set value.
+     * @param value       Value to set.
+     * @param <T>         Type of option.
+     * @throws IOException          I/O error is occurred.
+     * @throws OSCException         Server returned error response.
+     * @throws NullPointerException if argument is null or contains null.
+     */
+    @Nonnull
+    public <T> void setMySetting(@Nonnull final CaptureMode captureMode, @Nonnull final Option<T> option, T value) throws IOException {
+        Objects.requireNonNull(option, "option can not be null.");
+        Objects.requireNonNull(value, "value can not be null.");
+
+        final OptionSet optionSet = new OptionSet.Builder()
+                .put(option, value)
+                .build();
+        setMySettings(captureMode, optionSet);
+    }
+
+    /**
+     * Set the default shooting properties for boot time.
+     *
+     * @param captureMode Capture mode.
+     * @param optionSet   Set of options to store.
+     * @throws IOException          I/O error is occurred.
+     * @throws OSCException         Server returned error response.
+     * @throws NullPointerException if argument is null.
+     * @see <a href="https://developers.theta360.com/en/docs/v2.1/api_reference/commands/camera._set_my_setting.html">camera._setMySetting · commands · API Reference · v2.1 · API &amp; SDK | RICOH THETA Developers</a>
+     */
+    public void setMySettings(@Nonnull final CaptureMode captureMode, @Nonnull final OptionSet optionSet) throws IOException {
+        Objects.requireNonNull(captureMode, "captureMode can not be null.");
+        Objects.requireNonNull(optionSet, "optionSet can not be null.");
+
+        final SetMySetting.Parameter parameter = new SetMySetting.Parameter(captureMode, optionSet);
+        oscClient.commandExecute(Commands.SET_MY_SETTINGS, parameter);
     }
 
     /**

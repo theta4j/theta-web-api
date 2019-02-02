@@ -17,6 +17,7 @@
 package org.theta4j.webapi;
 
 import org.theta4j.osc.Command;
+import org.theta4j.osc.OptionSet;
 
 final class Commands {
     static final Command<Void, Void> FINISH_WLAN = Command.create("camera._finishWlan", Void.class, Void.class);
@@ -34,6 +35,10 @@ final class Commands {
     static final Command<GetMetadata.Parameter, Metadata> GET_METADATA = Command.create("camera._getMetadata", GetMetadata.Parameter.class, Metadata.class);
 
     static final Command<Void, Void> RESET = Command.create("camera.reset", Void.class, Void.class);
+
+    static final Command<GetMySetting.Parameter, OptionSet> GET_MY_SETTINGS = Command.create("camera._getMySetting", GetMySetting.Parameter.class, OptionSet.class);
+
+    static final Command<SetMySetting.Parameter, Void> SET_MY_SETTINGS = Command.create("camera._setMySetting", SetMySetting.Parameter.class, Void.class);
 
     static final Command<Void, Void> STOP_SELF_TIMER = Command.create("camera._stopSelfTimer", Void.class, Void.class);
 

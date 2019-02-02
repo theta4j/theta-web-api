@@ -319,6 +319,29 @@ class ThetaTest {
         }
 
         @Test
+        void getMySetting() throws Exception {
+            theta.getMySetting(CaptureMode.IMAGE, APERTURE);
+        }
+
+        @Test
+        void getMySettings() throws Exception {
+            theta.getMySettings(CaptureMode.IMAGE, APERTURE);
+        }
+
+        @Test
+        void setMySetting() throws Exception {
+            theta.setMySetting(CaptureMode.IMAGE, APERTURE, Aperture.F2_0);
+        }
+
+        @Test
+        void setMySettings() throws Exception {
+            final OptionSet optionSet = new OptionSet.Builder()
+                    .put(APERTURE, Aperture.F2_0)
+                    .build();
+            theta.setMySettings(CaptureMode.IMAGE, optionSet);
+        }
+
+        @Test
         void stopSelfTimer() throws Exception {
             theta.setOption(CAPTURE_MODE, CaptureMode.IMAGE);
             theta.setOption(EXPOSURE_DELAY, 10);
