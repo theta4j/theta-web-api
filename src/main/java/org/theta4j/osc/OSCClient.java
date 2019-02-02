@@ -22,7 +22,6 @@ import com.burgstaller.okhttp.digest.CachingAuthenticator;
 import com.burgstaller.okhttp.digest.Credentials;
 import com.burgstaller.okhttp.digest.DigestAuthenticator;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import okhttp3.*;
 
@@ -32,6 +31,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 
@@ -43,7 +43,7 @@ import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 public final class OSCClient {
     private static final Gson GSON = new Gson();
 
-    private static final Command<JsonObject, OptionSet> GET_OPTIONS_COMMAND = Command.create("camera.getOptions", JsonObject.class, OptionSet.class);
+    private static final Command<GetOptions.Parameter, OptionSet> GET_OPTIONS_COMMAND = Command.create("camera.getOptions", GetOptions.Parameter.class, OptionSet.class);
 
     private static final Command<OptionSet, Void> SET_OPTIONS_COMMAND = Command.create("camera.setOptions", OptionSet.class, Void.class);
 
@@ -295,13 +295,8 @@ public final class OSCClient {
             throw new NullPointerException("names can not contain null.");
         }
 
-        final JsonArray optionNames = new JsonArray(options.size());
-        options.stream()
-                .map(Option::getName)
-                .forEach(optionNames::add);
-
-        final JsonObject parameter = new JsonObject();
-        parameter.add("optionNames", optionNames);
+        final List<String> optionNames = options.stream().map(Option::getName).collect(Collectors.toList());
+        final GetOptions.Parameter parameter = new GetOptions.Parameter(optionNames);
 
         final CommandResponse<OptionSet> response = commandExecute(GET_OPTIONS_COMMAND, parameter);
 
