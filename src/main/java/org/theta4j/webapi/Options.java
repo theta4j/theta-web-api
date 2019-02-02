@@ -21,6 +21,11 @@ import org.theta4j.osc.Option;
 
 import static org.theta4j.osc.Option.SUPPORT;
 
+/**
+ * Option definitions for THETA Web API.
+ *
+ * @see <a href="https://developers.theta360.com/en/docs/v2.1/api_reference/options/">Overview · Options · API Reference · v2.1 · API &amp; SDK | RICOH THETA Developers</a>
+ */
 public final class Options {
     public static final Option<Aperture> APERTURE = Option.create("aperture", Aperture.class);
     public static final Option<AutoBracketProgram> AUTO_BRACKET = Option.create("_autoBracket", AutoBracketProgram.class);

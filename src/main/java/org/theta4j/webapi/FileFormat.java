@@ -30,8 +30,18 @@ import java.util.Optional;
  * @see <a href="https://developers.theta360.com/en/docs/v2.1/api_reference/options/file_format.html">fileFormat · options · API Reference · v2.1 · API &amp; SDK | RICOH THETA Developers</a>
  */
 public final class FileFormat {
+    /**
+     * Type of file.
+     */
     public enum Type {
+        /**
+         * JPEG
+         */
         @SerializedName("jpeg") JPEG,
+
+        /**
+         * MPEG-4
+         */
         @SerializedName("mp4") MPEG4
     }
 

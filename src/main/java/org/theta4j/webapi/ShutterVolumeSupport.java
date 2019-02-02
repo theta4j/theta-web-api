@@ -19,6 +19,11 @@ package org.theta4j.webapi;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
+/**
+ * Support value of bracketNumber in _shutterVolume option.
+ *
+ * @see <a href="https://developers.theta360.com/en/docs/v2.1/api_reference/options/_shutter_volume.html">_shutterVolume · options · API Reference · v2.1 · API &amp; SDK | RICOH THETA Developers</a>
+ */
 public final class ShutterVolumeSupport {
     private final int minShutterVolume;
 

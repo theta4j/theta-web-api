@@ -30,9 +30,18 @@ import java.util.Objects;
  * @see <a href="https://developers.theta360.com/en/docs/v2.1/api_reference/commands/camera.list_files.html">camera.listFiles · commands · API Reference · v2.1 · API &amp; SDK | RICOH THETA Developers</a>
  */
 public final class FileInfo {
-    @Nonnull
+    /**
+     * Projection type.
+     */
     public enum ProjectionType {
+        /**
+         * Equirectangular
+         */
         @SerializedName("Equirectangular") EQUIRECTANGULAR,
+
+        /**
+         * Dual-Fisheye
+         */
         @SerializedName("Dual-Fisheye") DUAL_FISHEYE
     }
 
