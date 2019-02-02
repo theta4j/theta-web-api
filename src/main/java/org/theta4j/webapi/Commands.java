@@ -18,60 +18,41 @@ package org.theta4j.webapi;
 
 import org.theta4j.osc.Command;
 
-import javax.annotation.Nonnull;
-
 final class Commands {
-    @Nonnull
     static final Command<Void, Void> FINISH_WLAN = Command.create("camera._finishWlan", Void.class, Void.class);
 
-    @Nonnull
     static final Command<Void, TakePicture.Result> TAKE_PICTURE = Command.create("camera.takePicture", Void.class, TakePicture.Result.class);
 
-    @Nonnull
     static final Command<StartCapture.Parameter, StartCapture.Result> START_CAPTURE = Command.create("camera.startCapture", StartCapture.Parameter.class, StartCapture.Result.class);
 
-    @Nonnull
     static final Command<Void, StopCapture.Result> STOP_CAPTURE = Command.create("camera.stopCapture", Void.class, StopCapture.Result.class);
-    @Nonnull
+
     static final Command<ListFiles.Parameter, ListFiles.Result> LIST_FILES = Command.create("camera.listFiles", ListFiles.Parameter.class, ListFiles.Result.class);
 
-    @Nonnull
     static final Command<Delete.Parameter, Void> DELETE = Command.create("camera.delete", Delete.Parameter.class, Void.class);
 
-    @Nonnull
     static final Command<GetMetadata.Parameter, Metadata> GET_METADATA = Command.create("camera._getMetadata", GetMetadata.Parameter.class, Metadata.class);
 
-    @Nonnull
     static final Command<Void, Void> RESET = Command.create("camera.reset", Void.class, Void.class);
 
-    @Nonnull
     static final Command<Void, Void> STOP_SELF_TIMER = Command.create("camera._stopSelfTimer", Void.class, Void.class);
 
-    @Nonnull
     static final Command<ConvertVideoFormats.Parameter, ConvertVideoFormats.Result> CONVERT_VIDEO_FORMATS = Command.create("camera._convertVideoFormats", ConvertVideoFormats.Parameter.class, ConvertVideoFormats.Result.class);
 
-    @Nonnull
     static final Command<Void, Void> CANCEL_VIDEO_CONVERT = Command.create("camera._cancelVideoConvert", Void.class, Void.class);
 
-    @Nonnull
     static final Command<SetBluetoothDevice.Parameter, SetBluetoothDevice.Result> SET_BLUETOOTH_DEVICE = Command.create("camera._setBluetoothDevice", SetBluetoothDevice.Parameter.class, SetBluetoothDevice.Result.class);
 
-    @Nonnull
     static final Command<Void, ListAccessPoints.Result> LIST_ACCESS_POINTS = Command.create("camera._listAccessPoints", Void.class, ListAccessPoints.Result.class);
 
-    @Nonnull
     static final Command<AccessPoint, Void> SET_ACCESS_POINT = Command.create("camera._setAccessPoint", AccessPoint.class, Void.class);
 
-    @Nonnull
     static final Command<DeleteAccessPoint.Parameter, Void> DELETE_ACCESS_POINT = Command.create("camera._deleteAccessPoint", DeleteAccessPoint.Parameter.class, Void.class);
 
-    @Nonnull
     static final Command<Void, ListPlugins.Result> LIST_PLUGINS = Command.create("camera._listPlugins", Void.class, ListPlugins.Result.class);
 
-    @Nonnull
     static final Command<SetPlugin.Parameter, Void> SET_PLUGIN = Command.create("camera._setPlugin", SetPlugin.Parameter.class, Void.class);
 
-    @Nonnull
     static final Command<PluginControl.Parameter, Void> PLUGIN_CONTROL = Command.create("camera._pluginControl", PluginControl.Parameter.class, Void.class);
 
     private Commands() {
