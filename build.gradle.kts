@@ -107,6 +107,7 @@ tasks.withType<Test> {
 
 repositories {
     jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -114,6 +115,7 @@ dependencies {
     implementation("com.google.code.gson", "gson", "2.8.5")
     implementation("com.squareup.okhttp3", "okhttp", "3.12.1")
     implementation("com.burgstaller", "okhttp-digest", "1.18")
+    implementation("commons-io", "commons-io", "2.6")
 
     testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.4.0-RC1")
     testRuntime("org.junit.jupiter", "junit-jupiter-engine", "5.4.0-RC1")

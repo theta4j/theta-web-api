@@ -33,6 +33,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import static java.net.HttpURLConnection.HTTP_OK;
 import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 
 /**
@@ -344,6 +345,45 @@ public final class OSCClient {
         }
     }
 
+    /**
+     * camera.getLivePreview command.
+     * You must call {@link MJpegInputStream#close()} of returned value to terminate stream.
+     *
+     * @return Motion JPEG stream.
+     * @throws IOException  I/O error is occurred.
+     * @throws OSCException Server returned error response.
+     */
+    @Nonnull
+    public MJpegInputStream getLivePreview() throws IOException {
+        final Command<Void, Void> command = Command.create("camera.getLivePreview", Void.class, Void.class);
+
+        final CommandRequest reqBody = new CommandRequest(command.getName(), null);
+
+        final RequestBody requestBody = RequestBody.create(
+                MediaType.parse("application/json; charset=UTF-8"), GSON.toJson(reqBody));
+
+        final Request request = new Request.Builder()
+                .url(endpoint + "/osc/commands/execute")
+                .post(requestBody)
+                .addHeader("Accept", "application/json")
+                .addHeader("X-XSRF-Protected", "1")
+                .build();
+
+        final Response response = httpClient.newCall(request).execute();
+
+        if (response.code() == HTTP_UNAUTHORIZED) {
+            throw new IOException(response.message());
+        }
+
+        if (response.code() != HTTP_OK) {
+            final JsonObject json = GSON.fromJson(response.body().charStream(), JsonObject.class);
+            final CommandResponse<Void> commandRes = CommandResponse.valueOf(json, Void.class);
+            throw commandRes.getError();
+        }
+
+        return MJpegInputStream.fromHttpStream("---osclivepreview---", response.body().byteStream());
+    }
+
     // Helpers
 
     private JsonObject httpGet(final String url) throws IOException {
@@ -367,8 +407,7 @@ public final class OSCClient {
 
     private JsonObject httpPost(final String url, final JsonObject body) throws IOException {
         final RequestBody requestBody = RequestBody.create(
-                MediaType.parse("application/json; charset=UTF-8"),
-                body != null ? GSON.toJson(body) : "");
+                MediaType.parse("application/json; charset=UTF-8"), GSON.toJson(body));
 
         final Request request = new Request.Builder()
                 .url(url)

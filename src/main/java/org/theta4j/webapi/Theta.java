@@ -344,6 +344,19 @@ public final class Theta {
     }
 
     /**
+     * Get live preview stream of the camera.
+     * You must call {@link MJpegInputStream#close()} of returned value to terminate stream.
+     *
+     * @return Motion JPEG stream.
+     * @throws IOException  I/O error is occurred.
+     * @throws OSCException Server returned error response.
+     */
+    @Nonnull
+    public MJpegInputStream getLivePreview() throws IOException {
+        return oscClient.getLivePreview();
+    }
+
+    /**
      * Deletes still image or video files.
      *
      * @param fileUrls Files to delete from THETA.

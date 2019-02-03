@@ -19,7 +19,10 @@ package org.theta4j.webapi;
 import org.junit.jupiter.api.*;
 import org.theta4j.osc.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Arrays;
@@ -298,6 +301,19 @@ class ThetaTest {
         @Test
         void delete() throws Exception {
             // tested on other test
+        }
+
+        @Test
+        void getLivePreview() throws Exception {
+            final int times = 10;
+            try (final MJpegInputStream stream = theta.getLivePreview()) {
+                for (int i = 0; i < times; i++) {
+                    final InputStream frame = stream.nextFrame();
+                    BufferedImage image = ImageIO.read(frame);
+                    assertNotNull(image); // ImageIO.read returns null on failure.
+                    frame.close(); // for testing that frame#close is not propagated to stream#close
+                }
+            }
         }
 
         @Test
