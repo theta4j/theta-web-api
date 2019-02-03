@@ -8,8 +8,6 @@ Supported environments are Java, JVM languages, Android, and THETA Plug-in.
 
 Tested on RICOH THETA V. Some features for THETA S and SC are not tested.
 
-`camera.getLivePreview` is currently not implemented.
-
 ## Getting Started
 
 Modify your `build.gradle` to include this library.
@@ -22,7 +20,7 @@ repository {
 
 dependencies {
     ...
-    implementation 'org.theta4j:theta-web-api:1.1.0' // insert this line
+    implementation 'org.theta4j:theta-web-api:1.2.0' // insert this line
 }
 ```
 
