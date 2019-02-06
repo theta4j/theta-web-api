@@ -13,7 +13,7 @@ Tested on RICOH THETA V. Some features for THETA S and SC are not tested.
 Modify your `build.gradle` to include this library.
 
 ```groovy
-repository {
+repositories {
     ...
     jcenter() // insert this line
 }
