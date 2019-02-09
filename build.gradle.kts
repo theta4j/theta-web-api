@@ -39,42 +39,37 @@ tasks {
 }
 
 publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            groupId = "org.theta4j"
-            artifactId = "theta-web-api"
-            version = project.version as String
-            artifact(tasks["sourceJar"])
-            artifact(tasks["javadocJar"])
-            pom {
-                name.set("RICOH THETA Web API Client")
-                description.set("Client implementation of RICOH THETA API.")
-                url.set("https://github.com/theta4j/theta-web-api")
-                licenses {
-                    license {
-                        name.set("The Apache License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+    publications.create<MavenPublication>("maven") {
+        from(components["java"])
+        groupId = "org.theta4j"
+        artifactId = "theta-web-api"
+        version = project.version as String
+        artifact(tasks["sourceJar"])
+        artifact(tasks["javadocJar"])
+        pom {
+            name.set("THETA Web API Client")
+            description.set("Client implementation of RICOH THETA API.")
+            url.set("https://github.com/theta4j/theta-web-api")
+            licenses {
+                license {
+                    name.set("The Apache License, Version 2.0")
+                    url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                }
+                developers {
+                    developer {
+                        name.set("theta4j Project")
+                        email.set("info@theta4j.org")
                     }
-                    developers {
-                        developer {
-                            name.set("theta4j Project")
-                            email.set("info@theta4j.org")
-                        }
-                    }
-                    scm {
-                        url.set("https://github.com/theta4j/theta-web-api.git")
-                    }
+                }
+                scm {
+                    url.set("https://github.com/theta4j/theta-web-api.git")
                 }
             }
         }
     }
 
-    repositories {
-        maven {
-            // change to point to your repo, e.g. http://my.org/repo
-            url = uri("$buildDir/repo")
-        }
+    repositories.maven {
+        url = uri("$buildDir/repo")
     }
 }
 
@@ -89,9 +84,7 @@ bintray {
         version.apply {
             name = project.version as String
             vcsTag = "v${project.version}"
-            gpg.apply {
-                sign = true
-            }
+            gpg.sign = true
             mavenCentralSync.apply {
                 sync = true
                 user = properties["ossrh.user"] as String
