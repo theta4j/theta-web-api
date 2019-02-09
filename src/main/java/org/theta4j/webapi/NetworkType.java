@@ -25,6 +25,11 @@ import com.google.gson.annotations.SerializedName;
  */
 public enum NetworkType {
     /**
+     * Network is turned off.
+     */
+    @SerializedName("OFF") OFF,
+
+    /**
      * Direct mode
      */
     @SerializedName("AP") ACCESS_POINT,
