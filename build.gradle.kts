@@ -74,8 +74,8 @@ publishing {
 }
 
 bintray {
-    user = properties["bintray.user"] as String
-    key = properties["bintray.key"] as String
+    user = properties["bintray.user"]?.toString().orEmpty()
+    key = properties["bintray.key"]?.toString().orEmpty()
     setPublications("maven")
     pkg.apply {
         userOrg = "theta4j"
@@ -87,8 +87,8 @@ bintray {
             gpg.sign = true
             mavenCentralSync.apply {
                 sync = true
-                user = properties["ossrh.user"] as String
-                password = properties["ossrh.password"] as String
+                user = properties["ossrh.user"]?.toString().orEmpty()
+                password = properties["ossrh.password"]?.toString().orEmpty()
             }
         }
     }
