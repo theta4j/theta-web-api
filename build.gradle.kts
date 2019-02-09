@@ -20,7 +20,7 @@ plugins {
     id("com.jfrog.bintray") version "1.8.4"
 }
 
-version = "1.2.0"
+version = "1.2.1"
 
 tasks {
     javadoc {

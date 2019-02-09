@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.1
+
+* Add `NetworkType#OFF`
+
 ## 1.2.0
 
 * Support `camera.getLivePreview` command.
