@@ -110,6 +110,6 @@ dependencies {
     implementation("com.burgstaller", "okhttp-digest", "1.18")
     implementation("commons-io", "commons-io", "2.6")
 
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.4.0-RC1")
-    testRuntime("org.junit.jupiter", "junit-jupiter-engine", "5.4.0-RC1")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.4.0")
+    testRuntime("org.junit.jupiter", "junit-jupiter-engine", "5.4.0")
 }
