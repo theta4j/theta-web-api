@@ -516,6 +516,12 @@ class ThetaTest {
         }
 
         @Test
+        void getRemainingSpace() throws Exception {
+            final long remainingSpace = theta.getOption(REMAINING_SPACE);
+            assertTrue(remainingSpace > 0, "remainingSpace must be positiveValue");
+        }
+
+        @Test
         void setAperture() throws Exception {
             final List<Aperture> apertureSupport = theta.getOption(APERTURE_SUPPORT);
             for (Aperture aperture : apertureSupport) {

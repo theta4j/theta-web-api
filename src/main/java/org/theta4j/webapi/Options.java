@@ -57,7 +57,7 @@ public final class Options {
     public static final Option<String> PASSWORD = Option.create("_password", String.class);
     public static final Option<PreviewFormat> PREVIEW_FORMAT = Option.create("previewFormat", PreviewFormat.class);
     public static final Option<Integer> REMAINING_PICTURES = Option.create("remainingPictures", Integer.class);
-    public static final Option<Integer> REMAINING_SPACE = Option.create("remainingSpace", Integer.class);
+    public static final Option<Long> REMAINING_SPACE = Option.create("remainingSpace", Long.class);
     public static final Option<Integer> REMAINING_VIDEO_SECONDS = Option.create("remainingVideoSeconds", Integer.class);
     public static final Option<ShutterSpeed> SHUTTER_SPEED = Option.create("shutterSpeed", ShutterSpeed.class);
     public static final Option<Integer> SHUTTER_VOLUME = Option.create("_shutterVolume", Integer.class);
