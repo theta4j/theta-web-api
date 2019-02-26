@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.theta4j:theta-web-api:1.2.0'
+    implementation 'org.theta4j:theta-web-api:1.2.2'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.2
+
+* Fix overflow problem of `remainingSpace` option.
+
 ## 1.2.1
 
 * Add `NetworkType#OFF`
