@@ -40,6 +40,11 @@ public final class FileFormat {
         @SerializedName("jpeg") JPEG,
 
         /**
+         * RAW+
+         */
+        @SerializedName("raw+") RAW,
+
+        /**
          * MPEG-4
          */
         @SerializedName("mp4") MPEG4
@@ -54,6 +59,11 @@ public final class FileFormat {
      * JPEG 2048x1024
      */
     public static final FileFormat JPEG_2048_1024 = new FileFormat(Type.JPEG, 2048, 1024);
+
+    /**
+     * RAW+ 6720x3360
+     */
+    public static final FileFormat RAW_6720_3360 = new FileFormat(Type.RAW, 6720, 3360);
 
     /**
      * MPEG-4 3840x1920 H.264/MPEG-4 AVC

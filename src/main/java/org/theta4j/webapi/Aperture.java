@@ -38,7 +38,22 @@ public enum Aperture {
     /**
      * F2.0
      */
-    F2_0("2.0");
+    F2_0("2.0"),
+
+    /**
+     * F2.1
+     */
+    F2_1("2.1"),
+
+    /**
+     * F3.5
+     */
+    F3_5("3.5"),
+
+    /**
+     * F5.6
+     */
+    F5_6("5.6");
 
     private static final Map<BigDecimal, Aperture> map =
             Stream.of(values()).collect(Collectors.toMap(Aperture::getValue, Function.identity()));

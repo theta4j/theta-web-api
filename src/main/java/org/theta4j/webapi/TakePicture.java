@@ -16,7 +16,10 @@
 
 package org.theta4j.webapi;
 
+import com.google.gson.annotations.SerializedName;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.net.URL;
 
 /**
@@ -31,8 +34,11 @@ public final class TakePicture {
     public static final class Result {
         private final URL fileUrl;
 
+        @SerializedName("_dngFileUrl")
+        private final URL dngFileUrl;
+
         /**
-         * URL of captured file.
+         * URL of captured image file.
          */
         @Nonnull
         public URL getFileUrl() {
@@ -40,10 +46,22 @@ public final class TakePicture {
         }
 
         /**
+         * URL of captured RAW image file.
+         *
+         * @return URL of captured RAW image file. returns null if the file format is not in 'raw+'.
+         * @see org.theta4j.webapi.FileFormat
+         */
+        @Nullable
+        public URL getDngFileUrl() {
+            return dngFileUrl;
+        }
+
+        /**
          * for GSON
          */
-        private Result(final URL fileUrl) {
+        private Result(final URL fileUrl, final URL dngFileUrl) {
             this.fileUrl = fileUrl;
+            this.dngFileUrl = dngFileUrl;
         }
     }
 

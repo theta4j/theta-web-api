@@ -46,7 +46,12 @@ public final class StartCapture {
         /**
          * Auto bracket shooting.
          */
-        @SerializedName("bracket") BRACKET;
+        @SerializedName("bracket") BRACKET,
+
+        /**
+         * Time shit shooting.
+         */
+        @SerializedName("timeShift") TIME_SHIFT;
     }
 
     static final class Parameter {
