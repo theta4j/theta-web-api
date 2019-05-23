@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.theta4j.webapi.Options.*;
 
-class ThetaTest {
+class ThetaVTest {
     private static Theta theta;
 
     private static OptionSet backup;
