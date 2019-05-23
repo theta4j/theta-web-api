@@ -20,6 +20,7 @@ import org.junit.jupiter.api.*;
 import org.theta4j.osc.*;
 
 import javax.imageio.ImageIO;
+import javax.print.DocFlavor;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.theta4j.webapi.Options.*;
 
-class ThetaVTest {
+class ThetaZ1Test {
     private static Theta theta;
 
     private static OptionSet backup;
@@ -143,7 +144,7 @@ class ThetaVTest {
         theta.setOption(CAPTURE_MODE, backup.get(CAPTURE_MODE));
         theta.setOptions(new OptionSet.Builder()
                 .put(APERTURE, backup.get(APERTURE))
-                .put(AUTO_BRACKET, backup.get(AUTO_BRACKET))
+                //.put(AUTO_BRACKET, backup.get(AUTO_BRACKET))
                 .put(BITRATE, backup.get(BITRATE))
                 .put(BLUETOOTH_POWER, backup.get(BLUETOOTH_POWER))
                 .put(CAPTURE_INTERVAL, backup.get(CAPTURE_INTERVAL))
@@ -268,6 +269,10 @@ class ThetaVTest {
                     .put(CAPTURE_INTERVAL, 4)
                     .build());
 
+            // This sleep is needed to avoid error on Z1. (It may be a bug.)
+            assertEquals(theta.getOption(CAPTURE_MODE), CaptureMode.IMAGE); // This assertion is OK.
+            Thread.sleep(1000);
+
             // start and stop
             theta.startCapture();
             final CommandResponse<StopCapture.Result> res = waitForDone(theta.stopCapture());
@@ -281,6 +286,11 @@ class ThetaVTest {
         @Test
         void startStopVideoCapture() throws Exception {
             theta.setOption(CAPTURE_MODE, CaptureMode.VIDEO);
+            theta.setOption(EXPOSURE_DELAY, 0);
+
+            // This sleep is needed to avoid error on Z1. (It may be a bug.)
+            // assertEquals(theta.getOption(CAPTURE_MODE), CaptureMode.VIDEO); // This assertion is OK.
+            Thread.sleep(1000);
 
             // start and stop
             theta.startCapture();
@@ -375,6 +385,10 @@ class ThetaVTest {
             void convertVideoFormats() throws Exception {
                 theta.setOption(CAPTURE_MODE, CaptureMode.VIDEO);
 
+                // This sleep is needed to avoid error on Z1. (It may be a bug.)
+                // assertEquals(theta.getOption(CAPTURE_MODE), CaptureMode.VIDEO); // This assertion is OK.
+                Thread.sleep(1000);
+
                 // create video for test
                 theta.startCapture();
                 Thread.sleep(3000);
@@ -399,6 +413,10 @@ class ThetaVTest {
             @Test
             void cancelVideoConvert() throws Exception {
                 theta.setOption(CAPTURE_MODE, CaptureMode.VIDEO);
+
+                // This sleep is needed to avoid error on Z1. (It may be a bug.)
+                // assertEquals(theta.getOption(CAPTURE_MODE), CaptureMode.VIDEO); // This assertion is OK.
+                Thread.sleep(1000);
 
                 // create video for test
                 theta.startCapture();
@@ -458,25 +476,10 @@ class ThetaVTest {
         }
 
         @Test
-        void listAndSetPlugin() throws Exception {
+        void listPlugin() throws Exception {
             final CommandResponse<ListPlugins.Result> response = waitForDone(theta.listPlugins());
-
             final List<PluginInfo> pluginInfoList = response.getResult().getPlugins();
-
-            final String backup = pluginInfoList.stream()
-                    .filter(PluginInfo::isBoot)
-                    .findFirst()
-                    .get()
-                    .getPackageName();
-
-            final String toBoot = pluginInfoList.stream()
-                    .filter(info -> !info.isBoot())
-                    .findFirst()
-                    .get()
-                    .getPackageName();
-
-            waitForDone(theta.setPlugin(toBoot));
-            waitForDone(theta.setPlugin(backup));
+            assertNotNull(pluginInfoList);
         }
 
         @Test

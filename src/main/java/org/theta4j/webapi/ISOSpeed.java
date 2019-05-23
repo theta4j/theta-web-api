@@ -137,7 +137,12 @@ public enum ISOSpeed {
     /**
      * ISO5000
      */
-    _5000(5000);
+    _5000(5000),
+
+    /**
+     * ISO6400
+     */
+    _6400(6400);
 
     private static final Map<Integer, ISOSpeed> map =
             Stream.of(values()).collect(Collectors.toMap(ISOSpeed::getValue, Function.identity()));

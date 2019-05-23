@@ -36,6 +36,11 @@ import java.util.stream.Stream;
 @JsonAdapter(Aperture.JsonAdapter.class)
 public enum Aperture {
     /**
+     * Auto
+     */
+    AUTO("0"),
+
+    /**
      * F2.0
      */
     F2_0("2.0"),
@@ -78,6 +83,10 @@ public enum Aperture {
     @Override
     @Nonnull
     public String toString() {
+        if (this == AUTO) {
+            return "Auto";
+        }
+
         return "F" + value.toPlainString();
     }
 
