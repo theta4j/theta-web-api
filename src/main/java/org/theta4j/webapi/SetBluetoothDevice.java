@@ -27,7 +27,7 @@ public final class SetBluetoothDevice {
     static final class Parameter {
         private final String uuid;
 
-        public Parameter(@Nonnull final String uuid) {
+        Parameter(final String uuid) {
             this.uuid = uuid;
         }
     }

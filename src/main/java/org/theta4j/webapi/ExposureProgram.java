@@ -43,6 +43,11 @@ public enum ExposureProgram {
     AUTO(2),
 
     /**
+     * Aperture priority program. Manually set the {@link Aperture}.
+     */
+    APERTURE(3),
+
+    /**
      * Shutter speed priority program. Manually set the {@link ShutterSpeed}.
      */
     SHUTTER_SPEED(4),

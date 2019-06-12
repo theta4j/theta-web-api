@@ -40,6 +40,8 @@ final class Commands {
 
     static final Command<SetMySetting.Parameter, Void> SET_MY_SETTINGS = Command.create("camera._setMySetting", SetMySetting.Parameter.class, Void.class);
 
+    static final Command<DeleteMySetting.Parameter, Void> DELETE_MY_SETTING = Command.create("camera._deleteMySetting", DeleteMySetting.Parameter.class, Void.class);
+
     static final Command<Void, Void> STOP_SELF_TIMER = Command.create("camera._stopSelfTimer", Void.class, Void.class);
 
     static final Command<ConvertVideoFormats.Parameter, ConvertVideoFormats.Result> CONVERT_VIDEO_FORMATS = Command.create("camera._convertVideoFormats", ConvertVideoFormats.Parameter.class, ConvertVideoFormats.Result.class);
@@ -59,6 +61,10 @@ final class Commands {
     static final Command<SetPlugin.Parameter, Void> SET_PLUGIN = Command.create("camera._setPlugin", SetPlugin.Parameter.class, Void.class);
 
     static final Command<PluginControl.Parameter, Void> PLUGIN_CONTROL = Command.create("camera._pluginControl", PluginControl.Parameter.class, Void.class);
+
+    static final Command<Void, GetPluginOrders.Result> GET_PLUGIN_ORDERS = Command.create("camera._getPluginOrders", Void.class, GetPluginOrders.Result.class);
+
+    static final Command<SetPluginOrders.Parameter, Void> SET_PLUGIN_ORDERS = Command.create("camera._setPluginOrders", SetPluginOrders.Parameter.class, Void.class);
 
     private Commands() {
         throw new AssertionError();
