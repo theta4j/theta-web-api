@@ -16,14 +16,21 @@
 
 package org.theta4j.webapi;
 
+import com.google.gson.annotations.SerializedName;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 final class PluginControl {
     static final class Parameter {
         private final PluginAction action;
 
-        Parameter(@Nonnull final PluginAction action) {
+        @SerializedName("plugin")
+        private final String packageName;
+
+        Parameter(@Nonnull final PluginAction action, @Nullable final String packageName) {
             this.action = action;
+            this.packageName = packageName;
         }
     }
 

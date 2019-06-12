@@ -19,6 +19,7 @@ package org.theta4j.webapi;
 import org.theta4j.osc.*;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
@@ -509,6 +510,21 @@ public final class Theta {
     }
 
     /**
+     * Delete the default shooting properties for boot time.
+     *
+     * @param captureMode Capture mode to delete the settings.
+     * @throws IOException          I/O error is occurred.
+     * @throws OSCException         Server returned error response.
+     * @throws NullPointerException if argument is null.
+     */
+    public void deleteMySettings(@Nonnull final CaptureMode captureMode) throws IOException {
+        Objects.requireNonNull(captureMode, "captureMode can not be null.");
+
+        final DeleteMySetting.Parameter parameter = new DeleteMySetting.Parameter(captureMode);
+        oscClient.commandExecute(Commands.DELETE_MY_SETTING, parameter);
+    }
+
+    /**
      * Stop running self-timer.
      *
      * @return Command response.
@@ -649,7 +665,7 @@ public final class Theta {
     }
 
     /**
-     * Starts or stops plugin.
+     * Controls the plug-in.
      *
      * @param action Action
      * @return Command response.
@@ -660,9 +676,55 @@ public final class Theta {
      */
     @Nonnull
     public CommandResponse<Void> pluginControl(@Nonnull final PluginAction action) throws IOException {
+        return pluginControl(action, null);
+    }
+
+    /**
+     * Controls the plug-in.
+     *
+     * @param action      Action
+     * @param packageName Package name of the plugin to control.
+     * @return Command response.
+     * @throws IOException          I/O error is occurred.
+     * @throws OSCException         Server returned error response.
+     * @throws NullPointerException if action is null.
+     * @see <a href="https://developers.theta360.com/en/docs/v2.1/api_reference/commands/camera._plugin_control.html">camera._pluginControl · commands · API Reference · v2.1 · API &amp; SDK | RICOH THETA Developers</a>
+     */
+    @Nonnull
+    public CommandResponse<Void> pluginControl(@Nonnull final PluginAction action, @Nullable final String packageName) throws IOException {
         Objects.requireNonNull(action, "action can not be null.");
 
-        final PluginControl.Parameter parameter = new PluginControl.Parameter(action);
+        final PluginControl.Parameter parameter = new PluginControl.Parameter(action, packageName);
         return oscClient.commandExecute(Commands.PLUGIN_CONTROL, parameter);
+    }
+
+    /**
+     * Get the package names of the start-up plug-in.
+     *
+     * @throws IOException  I/O error is occurred.
+     * @throws OSCException Server returned error response.
+     */
+    @Nonnull
+    public CommandResponse<GetPluginOrders.Result> getPluginOrders() throws IOException {
+        return oscClient.commandExecute(Commands.GET_PLUGIN_ORDERS);
+    }
+
+    /**
+     * Set the package names of the start-up plug-in.
+     *
+     * @param packageNames List of package names of the start-up plug-in.
+     * @throws IOException          I/O error is occurred.
+     * @throws OSCException         Server returned error response.
+     * @throws NullPointerException if packageNames is null or contains null.
+     */
+    @Nonnull
+    public CommandResponse<Void> setPluginOrders(List<String> packageNames) throws IOException {
+        Objects.requireNonNull(packageNames, "packageNames can not be null.");
+        if (packageNames.contains(null)) {
+            throw new NullPointerException("packageNames can not contain null.");
+        }
+
+        final SetPluginOrders.Parameter parameter = new SetPluginOrders.Parameter(packageNames);
+        return oscClient.commandExecute(Commands.SET_PLUGIN_ORDERS, parameter);
     }
 }
