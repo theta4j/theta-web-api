@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.3.0
+
+* Support THETA Z1 features except _autoBracket option.
+
 ## 1.2.2
 
 * Fix overflow problem of `remainingSpace` option.

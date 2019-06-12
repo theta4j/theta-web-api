@@ -6,7 +6,7 @@ Client implementation of [RICOH THETA API v2.1](https://developers.theta360.com/
 
 Supported environments are Java, JVM languages, Android, and THETA Plug-in.
 
-Tested on RICOH THETA V. Some features for THETA S and SC are not tested.
+Tested on RICOH THETA V and THETA Z1. Some features for THETA S and SC are not tested.
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     ...
-    implementation 'org.theta4j:theta-web-api:1.2.2' // insert this line
+    implementation 'org.theta4j:theta-web-api:1.3.0' // insert this line
 }
 ```
 
