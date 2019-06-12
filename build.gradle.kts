@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import java.util.*
+
 plugins {
     `java-library`
     `maven-publish`
@@ -74,8 +76,10 @@ publishing {
 }
 
 bintray {
-    user = properties["bintray.user"]?.toString().orEmpty()
-    key = properties["bintray.key"]?.toString().orEmpty()
+    val props = Properties().apply { load(rootProject.file("local.properties").inputStream()) }
+
+    user = props["bintray.user"]?.toString().orEmpty()
+    key = props["bintray.key"]?.toString().orEmpty()
     setPublications("maven")
     pkg.apply {
         userOrg = "theta4j"
@@ -87,8 +91,8 @@ bintray {
             gpg.sign = true
             mavenCentralSync.apply {
                 sync = true
-                user = properties["ossrh.user"]?.toString().orEmpty()
-                password = properties["ossrh.password"]?.toString().orEmpty()
+                user = props["ossrh.user"]?.toString().orEmpty()
+                password = props["ossrh.password"]?.toString().orEmpty()
             }
         }
     }

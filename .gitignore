@@ -1,4 +1,4 @@
 .gradle/
 build/
 out/
-gradle.properties
+local.properties
