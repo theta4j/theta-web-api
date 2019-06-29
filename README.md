@@ -39,11 +39,25 @@ Network access on UI thread causes an error on Android system. You need to call 
 For more details, see [the official document](https://developer.android.com/guide/components/processes-and-threads).
 
 ```kotlin
-// Bad example in Kotlin
+// Invalid example written in Kotlin
 class MyActivity : Activity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         // UI event is invoked on UI thread!!
         theta.takePicture() // this line causes error!!
+        ...
+    }
+}
+```
+
+```kotlin
+// Valid example written in Kotlin
+class MyActivity : Activity() {
+    private val executor = Executors.newSingleThreadExecutor()
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        executor.submit {
+            // The executor's thread is not an UI thread.
+            theta.takePicture() // this is OK.
+        }
         ...
     }
 }
@@ -109,7 +123,7 @@ final ISOSpeed iso = theta.getOption(ISO);
 System.out.println("ISO: " + iso);
 ```
 
-### Get multiple option values on one HTTP request
+### Get multiple option values in one HTTP request
 
 ```java
 import org.theta4j.osc.OptionSet;
@@ -130,7 +144,7 @@ import org.theta4j.webapi.ISOSpeed;
 theta.setOption(ISO, ISOSpeed._200);
 ```
 
-### Set multiple option values on one HTTP request
+### Set multiple option values in one HTTP request
 
 ```java
 import org.theta4j.osc.OptionSet;
