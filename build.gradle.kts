@@ -40,6 +40,22 @@ tasks {
     }
 }
 
+// Integration test for each models.
+listOf("V", "Z1").forEach { modelName ->
+    val name = "integrationTest$modelName"
+    sourceSets.create(name) {
+        compileClasspath += sourceSets[SourceSet.MAIN_SOURCE_SET_NAME].output + configurations.testCompileClasspath
+        runtimeClasspath += output + compileClasspath + configurations.testRuntimeClasspath
+    }
+    tasks.create<Test>(name) {
+        description = "Runs the integration tests for THETA $modelName"
+        group = JavaBasePlugin.VERIFICATION_GROUP
+        testClassesDirs = sourceSets[name].output.classesDirs
+        classpath = sourceSets[name].runtimeClasspath
+        outputs.upToDateWhen { false }
+    }
+}
+
 publishing {
     publications.create<MavenPublication>("maven") {
         from(components["java"])
