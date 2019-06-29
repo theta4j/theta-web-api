@@ -110,7 +110,7 @@ repositories {
 dependencies {
     implementation("com.google.code.findbugs", "jsr305", "3.0.2")
     implementation("com.google.code.gson", "gson", "2.8.5")
-    implementation("com.squareup.okhttp3", "okhttp", "3.12.1")
+    implementation("com.squareup.okhttp3", "okhttp", "3.14.2")
     implementation("com.burgstaller", "okhttp-digest", "1.18")
     implementation("commons-io", "commons-io", "2.6")
 
