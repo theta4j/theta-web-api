@@ -163,3 +163,8 @@ final OptionSet optionSet = new OptionSet.Builder()
         .build();          
 theta.setOptions(optionSet);
 ```
+
+## Development
+
+* [Testing](doc/dev/test)
+* [Publishing](doc/dev/publish)
