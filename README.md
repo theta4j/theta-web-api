@@ -24,6 +24,11 @@ dependencies {
 }
 ```
 
+### Example Projects
+
+* [Android App Example](android-app-example)
+* [THETA Plug-in Example](theta-plugin-example)
+
 ## Usage for Android and THETA Plug-in
 
 This library takes network access, so your application needs `android.permission.INTERNET` permission.
