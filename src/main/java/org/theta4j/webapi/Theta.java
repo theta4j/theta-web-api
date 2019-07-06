@@ -49,11 +49,25 @@ public final class Theta {
      */
     @Nonnull
     public static Theta create() {
-        return new Theta(OSCClient.create(DEFAULT_ENDPOINT));
+        return create(DEFAULT_ENDPOINT);
     }
 
     /**
-     * Create new {@link Theta}  with Digest Authentication. This is for THETA in client mode.
+     * Create new {@link Theta}. This is for THETA in client mode.
+     *
+     * @param endpoint Endpoint URL. For example, "http://192.168.4.110"
+     * @return Created instance.
+     * @throws NullPointerException if endpoint is null.
+     */
+    @Nonnull
+    public static Theta create(@Nonnull final String endpoint) {
+        Objects.requireNonNull(endpoint, "endpoint can not be null.");
+
+        return new Theta(OSCClient.create(endpoint));
+    }
+
+    /**
+     * Create new {@link Theta}. This is for THETA in client mode with Digest Authentication.
      *
      * @param endpoint Endpoint URL. For example, "http://192.168.4.110"
      * @param username Username for digest authentication.
