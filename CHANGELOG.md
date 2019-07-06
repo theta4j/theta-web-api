@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## 1.4.0
+
+* Support THETA in client mode without authentication.
+
 ## 1.3.0
 
-* Support THETA Z1 features except _autoBracket option.
+* Support THETA Z1 features except `_autoBracket` option.
 
 ## 1.2.2
 
