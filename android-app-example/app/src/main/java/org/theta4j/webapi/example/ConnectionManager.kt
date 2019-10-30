@@ -26,14 +26,14 @@ import java.io.Closeable
 
 class ConnectionManager(ctx: Context) : Closeable {
     companion object {
-        private val TAG = "CONNECTION_MANAGER"
+        private const val TAG = "CONNECTION_MANAGER"
     }
 
     private val connManager = ctx.getSystemService(ConnectivityManager::class.java)!!
 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
-            Log.d(TAG, "Bind to network " + network)
+            Log.d(TAG, "Bind to network $network")
             connManager.bindProcessToNetwork(network)
         }
     }

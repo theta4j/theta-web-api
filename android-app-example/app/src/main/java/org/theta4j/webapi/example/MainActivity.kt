@@ -27,7 +27,7 @@ import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        private val TAG = "THETA_WEB_API_EXAMPLE"
+        private const val TAG = "THETA_WEB_API_EXAMPLE"
     }
 
     private val theta = Theta.create()
