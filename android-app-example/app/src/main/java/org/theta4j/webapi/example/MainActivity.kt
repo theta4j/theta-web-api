@@ -19,8 +19,8 @@ package org.theta4j.webapi.example
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.theta4j.webapi.Theta
 import java.util.concurrent.Executors
