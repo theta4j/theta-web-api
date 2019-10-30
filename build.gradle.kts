@@ -29,14 +29,14 @@ tasks {
         options.locale = "en_US"
     }
     create<Jar>("sourceJar") {
-        from(sourceSets["main"].java.srcDirs)
-        classifier = "sources"
+        from(sourceSets[SourceSet.MAIN_SOURCE_SET_NAME].java.srcDirs)
+        archiveClassifier.set("sources")
     }
     create<Jar>("javadocJar") {
-        val javadoc = project.tasks["javadoc"] as Javadoc
+        val javadoc = project.tasks[JavaPlugin.JAVADOC_TASK_NAME] as Javadoc
         dependsOn(javadoc)
         from(javadoc.destinationDir)
-        classifier = "javadoc"
+        archiveClassifier.set("javadoc")
     }
 }
 
