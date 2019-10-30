@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.5.0
+
+* Support Handheld HDR.
+
 ## 1.4.0
 
 * Support THETA in client mode without authentication.
