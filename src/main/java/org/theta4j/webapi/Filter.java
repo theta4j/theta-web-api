@@ -42,5 +42,10 @@ public enum Filter {
     /**
      * HDR.
      */
-    @SerializedName("hdr") HDR
+    @SerializedName("hdr") HDR,
+
+    /**
+     * Handheld HDR (High Dynamic Range).
+     */
+    @SerializedName("Hh hdr") HANDHELD_HDR
 }
