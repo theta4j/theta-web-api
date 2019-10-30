@@ -40,7 +40,7 @@ public enum Filter {
     @SerializedName("Noise Reduction") NOISE_REDUCTION,
 
     /**
-     * HDR.
+     * HDR (High Dynamic Range).
      */
     @SerializedName("hdr") HDR,
 
