@@ -14,4 +14,25 @@
  * limitations under the License.
  */
 
-include ':app'
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.1.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+tasks.create<Delete>(BasePlugin.CLEAN_TASK_NAME) {
+    delete(rootProject.buildDir)
+}

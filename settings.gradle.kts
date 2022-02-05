@@ -18,7 +18,7 @@ rootProject.name = "theta-web-api"
 
 pluginManagement {
     repositories {
-        jcenter()
+        mavenCentral()
         gradlePluginPortal()
     }
 }

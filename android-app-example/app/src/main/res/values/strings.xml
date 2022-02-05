@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">theta-web-api-eample</string>
+    <string name="app_name">theta-web-api-example</string>
     <string name="start_label">Start Preview</string>
+    <string name="live_preview_description">Live preview</string>
 </resources>

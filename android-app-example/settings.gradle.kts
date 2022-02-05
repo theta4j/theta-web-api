@@ -14,27 +14,4 @@
  * limitations under the License.
  */
 
-buildscript {
-    ext.kotlin_version = '1.3.50'
-    repositories {
-        google()
-        jcenter()
-        
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        maven { url 'https://github.com/ricohapi/theta-plugin-library/raw/master/repository' }
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+include(":app")

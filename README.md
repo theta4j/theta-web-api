@@ -15,7 +15,7 @@ Modify your `build.gradle` to include this library.
 ```groovy
 repositories {
     ...
-    jcenter() // insert this line
+    mavenCentral() // insert this line
 }
 
 dependencies {
