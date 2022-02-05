@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.6.0
+
+* Migrate to Maven Central.
+* Update dependencies.
+
 ## 1.5.0
 
 * Support Handheld HDR.
