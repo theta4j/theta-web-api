@@ -19,10 +19,10 @@ import java.util.*
 plugins {
     `java-library`
     `maven-publish`
-    id("com.jfrog.bintray") version "1.8.4"
+    signing
 }
 
-version = "1.5.0"
+version = "1.6.0"
 
 tasks {
     javadoc {
@@ -57,7 +57,7 @@ listOf("V", "Z1").forEach { modelName ->
 }
 
 publishing {
-    publications.create<MavenPublication>("maven") {
+    publications.create<MavenPublication>("ossrh") {
         from(components["java"])
         groupId = "org.theta4j"
         artifactId = "theta-web-api"
@@ -86,32 +86,22 @@ publishing {
         }
     }
 
-    repositories.maven {
-        url = uri("$buildDir/repo")
-    }
-}
+    repositories {
+        maven { url = uri("$buildDir/repo") }
 
-bintray {
-    val props = Properties().apply { load(rootProject.file("local.properties").inputStream()) }
-
-    user = props["bintray.user"]?.toString().orEmpty()
-    key = props["bintray.key"]?.toString().orEmpty()
-    setPublications("maven")
-    pkg.apply {
-        userOrg = "theta4j"
-        repo = "maven"
-        name = "theta-web-api"
-        version.apply {
-            name = project.version as String
-            vcsTag = "v${project.version}"
-            gpg.sign = true
-            mavenCentralSync.apply {
-                sync = true
-                user = props["ossrh.user"]?.toString().orEmpty()
-                password = props["ossrh.password"]?.toString().orEmpty()
+        maven {
+            val props = Properties().apply { rootProject.file("local.properties").inputStream().use(this::load) }
+            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = props.getProperty("ossrh.user")
+                password = props.getProperty("ossrh.password")
             }
         }
     }
+}
+
+signing {
+    sign(publishing.publications["ossrh"])
 }
 
 tasks.withType<Test> {
@@ -119,17 +109,16 @@ tasks.withType<Test> {
 }
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
 dependencies {
     implementation("com.google.code.findbugs", "jsr305", "3.0.2")
-    implementation("com.google.code.gson", "gson", "2.8.5")
-    implementation("com.squareup.okhttp3", "okhttp", "3.14.2")
-    implementation("com.burgstaller", "okhttp-digest", "1.18")
-    implementation("commons-io", "commons-io", "2.6")
+    implementation("com.google.code.gson", "gson", "2.8.7")
+    implementation("com.squareup.okhttp3", "okhttp", "4.9.1")
+    implementation("io.github.rburgst", "okhttp-digest", "2.5")
+    implementation("commons-io", "commons-io", "2.9.0")
 
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.4.0")
-    testRuntime("org.junit.jupiter", "junit-jupiter-engine", "5.4.0")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.2")
+    testRuntime("org.junit.jupiter", "junit-jupiter-engine", "5.7.2")
 }

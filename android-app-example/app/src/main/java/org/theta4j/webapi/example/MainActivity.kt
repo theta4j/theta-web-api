@@ -21,14 +21,17 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import org.theta4j.webapi.Theta
+import org.theta4j.webapi.example.databinding.ActivityMainBinding
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
+
     companion object {
         private const val TAG = "THETA_WEB_API_EXAMPLE"
     }
+
+    private lateinit var binding: ActivityMainBinding
 
     private val theta = Theta.create()
 
@@ -38,9 +41,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        start_button.setOnClickListener { startPreview() }
+        binding.startButton.setOnClickListener { startPreview() }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             connectionManager = ConnectionManager(applicationContext)
@@ -65,12 +69,12 @@ class MainActivity : AppCompatActivity() {
                     while (true) {
                         val bmp = BitmapFactory.decodeStream(it.nextFrame())
                         runOnUiThread {
-                            live_preview.setImageBitmap(bmp)
+                            binding.livePreview.setImageBitmap(bmp)
                         }
                     }
                 } catch (e: Exception) {
                     runOnUiThread {
-                        live_preview.setImageResource(android.R.color.black)
+                        binding.livePreview.setImageResource(android.R.color.black)
                     }
                     Log.d(TAG, "stop preview")
                 }
