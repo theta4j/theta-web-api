@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     ...
-    implementation 'org.theta4j:theta-web-api:1.5.0' // insert this line
+    implementation 'org.theta4j:theta-web-api:1.6.0' // insert this line
 }
 ```
 
