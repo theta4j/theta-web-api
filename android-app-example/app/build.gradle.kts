@@ -16,35 +16,44 @@
 
 plugins {
     id("com.android.application")
+    id("com.google.devtools.ksp")
     kotlin("android")
 }
 
 android {
-    compileSdk = 31
+    namespace = "org.theta4j.webapi.example"
+    compileSdk = 34
     defaultConfig {
         applicationId = "org.theta4j.webapi.example"
-        minSdk = 24
-        targetSdk = 31
+        minSdk = 29
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    viewBinding {
-        isEnabled = true
+    buildFeatures {
+        compose = true
     }
-}
-
-repositories {
-    maven {
-        url = uri("../../build/repo")
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.4"
     }
 }
 
 dependencies {
-    implementation("org.theta4j:theta-web-api:1.6.0")
-    implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation("org.theta4j:theta-web-api:2.0.0")
+
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+
+    val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+    implementation("androidx.activity:activity-compose")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    implementation("androidx.compose.material3:material3:1.1.2")
 }

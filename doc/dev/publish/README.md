@@ -13,14 +13,12 @@ This project using Maven Central Repository to publish artifacts.
     signing.keyId=
     signing.password=
     signing.secretKeyRingFile=
-    ```
-3. Create `local.properties` file in the project root using the following template and fill the values.
-    ```properties
     ossrh.user=
     ossrh.password=
     ```
-4. Run `./gradlew publish`
-5. Open [Sonatype OSS Repository Manager](https://oss.sonatype.org).
+3. Run `./gradlew publish`
+4. Open [Sonatype OSS Repository Manager](https://oss.sonatype.org).
     1. See "Staging Repositories" section.
-    2. Chcek the artifact to publish.
-    3. Click "Close" and "Release".
+    2. Check the artifact to publish and click "Close".
+    3. Check the artifact to publish and click "Release".
+        - It takes a few minutes for the "Release" button to be enabled.

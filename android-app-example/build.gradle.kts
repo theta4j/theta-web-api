@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.1.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
-    }
+plugins {
+    id("com.android.application") version "8.2.0" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.21" apply false
+    id("com.google.devtools.ksp") version "1.9.21-1.0.16" apply false
 }
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url = uri("https://github.com/ricohapi/theta-plugin-library/raw/master/repository")
+        }
+        maven {
+            url = uri("../build/repo")
+        }
     }
 }
 

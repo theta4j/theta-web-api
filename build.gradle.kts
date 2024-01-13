@@ -14,34 +14,38 @@
  * limitations under the License.
  */
 
-import java.util.*
-
 plugins {
-    `java-library`
+    kotlin("jvm") version "1.9.21"
+    kotlin("plugin.serialization") version "1.9.21"
+    id("org.jetbrains.dokka") version "1.9.10"
     `maven-publish`
     signing
 }
 
-version = "1.6.0"
+version = "2.0.0-alpha"
 
 tasks {
-    javadoc {
-        options.locale = "en_US"
-    }
-    create<Jar>("sourceJar") {
-        from(sourceSets[SourceSet.MAIN_SOURCE_SET_NAME].java.srcDirs)
+    val sourcesJar by registering(Jar::class) {
+        dependsOn(JavaPlugin.CLASSES_TASK_NAME)
         archiveClassifier.set("sources")
+        from(sourceSets["main"].allSource)
     }
-    create<Jar>("javadocJar") {
-        val javadoc = project.tasks[JavaPlugin.JAVADOC_TASK_NAME] as Javadoc
-        dependsOn(javadoc)
-        from(javadoc.destinationDir)
+
+    val javadocJar by registering(Jar::class) {
+        dependsOn("dokkaJavadoc")
         archiveClassifier.set("javadoc")
+        from(javadoc)
+    }
+
+    artifacts {
+        archives(sourcesJar)
+        archives(javadocJar)
+        archives(jar)
     }
 }
 
-// Integration test for each models.
-listOf("V", "Z1").forEach { modelName ->
+// Integration test for each model.
+listOf("X").forEach { modelName ->
     val name = "integrationTest$modelName"
     sourceSets.create(name) {
         compileClasspath += sourceSets[SourceSet.MAIN_SOURCE_SET_NAME].output + configurations.testCompileClasspath
@@ -59,11 +63,11 @@ listOf("V", "Z1").forEach { modelName ->
 publishing {
     publications.create<MavenPublication>("ossrh") {
         from(components["java"])
+        artifact(tasks["sourcesJar"])
+        artifact(tasks["javadocJar"])
         groupId = "org.theta4j"
         artifactId = "theta-web-api"
         version = project.version as String
-        artifact(tasks["sourceJar"])
-        artifact(tasks["javadocJar"])
         pom {
             name.set("THETA Web API Client")
             description.set("Client implementation of RICOH THETA API.")
@@ -87,24 +91,27 @@ publishing {
     }
 
     repositories {
-        maven { url = uri("$buildDir/repo") }
-
         maven {
-            val props = Properties().apply { rootProject.file("local.properties").inputStream().use(this::load) }
-            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = props.getProperty("ossrh.user")
-                password = props.getProperty("ossrh.password")
+            url = uri("$buildDir/repo")
+        }
+
+        if (hasProperty("ossrh.user") && hasProperty("ossrh.password")) {
+            maven {
+                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                credentials {
+                    username = property("ossrh.user") as String
+                    password = property("ossrh.password") as String
+                }
             }
         }
     }
 }
 
 signing {
-    sign(publishing.publications["ossrh"])
+    publishing.publications["ossrh"]?.let { sign(it) }
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
@@ -113,12 +120,17 @@ repositories {
 }
 
 dependencies {
-    implementation("com.google.code.findbugs", "jsr305", "3.0.2")
-    implementation("com.google.code.gson", "gson", "2.8.7")
-    implementation("com.squareup.okhttp3", "okhttp", "4.9.1")
-    implementation("io.github.rburgst", "okhttp-digest", "2.5")
-    implementation("commons-io", "commons-io", "2.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation("io.github.rburgst:okhttp-digest:3.0")
+    implementation("commons-io:commons-io:2.11.0")
 
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.2")
-    testRuntime("org.junit.jupiter", "junit-jupiter-engine", "5.7.2")
+    implementation("org.slf4j:slf4j-api:2.0.6")
+    testImplementation("org.slf4j:slf4j-simple:2.0.6")
+
+    testImplementation("io.kotest:kotest-runner-junit5:5.8.0")
+    testImplementation("io.kotest:kotest-assertions-core:5.8.0")
+    testImplementation("io.kotest:kotest-property:5.8.0")
 }

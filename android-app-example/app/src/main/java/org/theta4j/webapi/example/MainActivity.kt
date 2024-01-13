@@ -17,67 +17,82 @@
 package org.theta4j.webapi.example
 
 import android.graphics.BitmapFactory
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import org.theta4j.webapi.Theta
-import org.theta4j.webapi.example.databinding.ActivityMainBinding
-import java.util.concurrent.Executors
+import org.theta4j.webapi.example.ui.theme.MyTheme
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     companion object {
         private const val TAG = "THETA_WEB_API_EXAMPLE"
     }
 
-    private lateinit var binding: ActivityMainBinding
-
     private val theta = Theta.create()
-
-    private val previewExecutor = Executors.newSingleThreadExecutor()
 
     private var connectionManager: ConnectionManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        binding.startButton.setOnClickListener { startPreview() }
+        setContent { AppScreen() }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            connectionManager = ConnectionManager(applicationContext)
-        }
+        connectionManager = ConnectionManager(applicationContext)
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
+        connectionManager?.close()
+        connectionManager = null
+    }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            connectionManager?.close()
-            connectionManager = null
+    @Composable
+    private fun AppScreen() = MyTheme {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = painterResource(id = R.drawable.ic_launcher_background),
+                contentDescription = "",
+            )
+            Button(
+                modifier = Modifier.align(Alignment.BottomEnd),
+                onClick = { startPreview() },
+            ) {
+                Text(text = stringResource(id = R.string.start_label))
+            }
         }
     }
 
     private fun startPreview() {
-        previewExecutor.submit {
-            theta.livePreview.use {
-                Log.d(TAG, "start preview")
-                try {
-                    while (true) {
-                        val bmp = BitmapFactory.decodeStream(it.nextFrame())
-                        runOnUiThread {
-                            binding.livePreview.setImageBitmap(bmp)
-                        }
-                    }
-                } catch (e: Exception) {
+        theta.livePreview.use {
+            Log.d(TAG, "start preview")
+            try {
+                while (true) {
+                    val bmp = BitmapFactory.decodeStream(it.nextFrame())
                     runOnUiThread {
-                        binding.livePreview.setImageResource(android.R.color.black)
+                        //binding.livePreview.setImageBitmap(bmp)
                     }
-                    Log.d(TAG, "stop preview")
                 }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    //binding.livePreview.setImageResource(android.R.color.black)
+                }
+                Log.d(TAG, "stop preview")
             }
         }
     }
