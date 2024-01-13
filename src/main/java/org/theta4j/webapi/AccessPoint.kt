@@ -22,7 +22,7 @@ import kotlinx.serialization.Serializable
 data class AccessPoint(
         val ssid: String,
 
-        val security: Security = Security.NONE,
+        val security: Security,
 
         val isStealth: Boolean? = null,
 

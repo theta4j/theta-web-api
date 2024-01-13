@@ -22,7 +22,7 @@ plugins {
     signing
 }
 
-version = "2.0.0-alpha"
+version = "2.0.0-alpha.2"
 
 tasks {
     val sourcesJar by registering(Jar::class) {
